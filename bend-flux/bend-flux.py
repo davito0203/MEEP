@@ -7,10 +7,10 @@ import meep as mp
 import numpy as np
 import matplotlib.pyplot as plt
 
-resolution = 20 # pixels/um
+resolution = 10 # pixels/um
 
-sx = 20  # size of cell in X direction
-sy = 40  # size of cell in Y direction
+sx = 16  # size of cell in X direction
+sy = 32  # size of cell in Y direction
 cell = mp.Vector3(sx,sy,0)
 
 dpml = 1.0
@@ -26,8 +26,8 @@ geometry = [mp.Block(size=mp.Vector3(mp.inf,w,mp.inf),
                      center=mp.Vector3(0,wvg_ycen,0),
                      material=mp.Medium(epsilon=12))]
 
-fcen = 0.15  # pulse center frequency
-df = 0.1     # pulse width (in frequency)
+fcen = 0.15/0.15  # pulse center frequency
+df = 0.1/0.15     # pulse width (in frequency)
 sources = [mp.Source(mp.GaussianSource(fcen,fwidth=df),
                      component=mp.Ez,
                      center=mp.Vector3(-0.5*sx+dpml,wvg_ycen,0),
@@ -39,7 +39,7 @@ sim = mp.Simulation(cell_size=cell,
                     sources=sources,
                     resolution=resolution)
 
-nfreq = 150  # number of frequencies at which to compute flux
+nfreq = 100  # number of frequencies at which to compute flux
 
 # reflected flux
 refl_fr = mp.FluxRegion(center=mp.Vector3(-0.5*sx+dpml+0.5,wvg_ycen,0),size=mp.Vector3(0,2*w,0))
@@ -48,6 +48,12 @@ refl = sim.add_flux(fcen,df,nfreq,refl_fr)
 # transmitted flux
 tran_fr = mp.FluxRegion(center=mp.Vector3(0.5*sx-dpml,wvg_ycen,0),size=mp.Vector3(0,2*w,0))
 tran = sim.add_flux(fcen,df,nfreq,tran_fr)
+
+# Figure
+plt.figure(dpi=150)
+sim.plot2D()
+plt.show()
+#
 
 pt = mp.Vector3(0.5*sx-dpml-0.5,wvg_ycen)
 
@@ -88,6 +94,10 @@ bend_tran_flux = mp.get_fluxes(tran)
 
 flux_freqs = mp.get_flux_freqs(refl)
 
+plt.figure(dpi=150)
+sim.plot2D()
+plt.show()
+
 wl = []
 Rs = []
 Ts = []
@@ -101,9 +111,9 @@ if mp.am_master():
     plt.plot(wl,Rs,'bo-',label='reflectance')
     plt.plot(wl,Ts,'ro-',label='transmittance')
     plt.plot(wl,1-Rs-Ts,'go-',label='loss')
-    plt.axis([5.0, 10.0, 0, 1])
+    #plt.axis([-inf, inf, -inf, inf])
     plt.xlabel("wavelength (μm)")
     plt.legend(loc="upper right")
-    # plt.show()
-    plt.savefig('Figure1.png')
+    plt.show()
+    #plt.savefig('Figure1.png')
 
