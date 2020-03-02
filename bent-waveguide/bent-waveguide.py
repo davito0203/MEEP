@@ -45,24 +45,24 @@ fps = 10
 Animate.to_mp4(fps,filename)
 Video(filename)
 
-sim.reset_meep()
-cell = mp.Vector3(16,40,0)
-geometry = [mp.Block(mp.Vector3(12,1,mp.inf),
-                     center=mp.Vector3(-2.5,-3.5),
-                     material=mp.Medium(epsilon=12)),
-            mp.Block(mp.Vector3(1,42,mp.inf),
-                     center=mp.Vector3(3.5,17),
-                     material=mp.Medium(epsilon=12))]
-sim.cell_size = cell
-sim.geometry = geometry
-sim.geometry_center = mp.Vector3(0,12,0)
+#sim.reset_meep()
+#cell = mp.Vector3(16,40,0)
+#geometry = [mp.Block(mp.Vector3(12,1,mp.inf),
+#                     center=mp.Vector3(-2.5,-3.5),
+#                     material=mp.Medium(epsilon=12)),
+#            mp.Block(mp.Vector3(1,42,mp.inf),
+#                     center=mp.Vector3(3.5,17),
+#                     material=mp.Medium(epsilon=12))]
+#sim.cell_size = cell
+#sim.geometry = geometry
+#sim.geometry_center = mp.Vector3(0,12,0)
 
-sim.run(until=400)
+#sim.run(until=400)
 
-plt.figure(dpi=150)
-sim.plot2D(fields=mp.Ez)
+#plt.figure(dpi=150)
+#sim.plot2D(fields=mp.Ez)
 # plt.show()
-plt.savefig('Large2Dstructure.png')
+#plt.savefig('Large2Dstructure.png')
 
 vals = []
 
