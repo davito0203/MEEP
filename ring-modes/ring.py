@@ -33,48 +33,48 @@ sim.run(mp.at_beginning(mp.output_epsilon),
         mp.after_sources(mp.Harminv(mp.Ez, mp.Vector3(r+0.1), fcen, df)),
         until_after_sources=300)
 
-#sim.reset_meep()
-#fcen=0.118
-#df = 0.1
-#sim.sources = [mp.Source(mp.GaussianSource(fcen, fwidth=df), mp.Ez, mp.Vector3(r+0.1))]
+sim.reset_meep()
+fcen=0.118
+df = 0.1
+sim.sources = [mp.Source(mp.GaussianSource(fcen, fwidth=df), mp.Ez, mp.Vector3(r+0.1))]
 
 # Start the simulation and get into steady state
-#sim.run(until=600) 
+sim.run(until=600) 
 
 # Prepare the animator and record the steady state response
-#f = plt.figure(dpi=150)
-#Animate = mp.Animate2D(sim, fields=mp.Ez, f=f, realtime=False, normalize=True)
-#sim.run(mp.at_every(0.5,Animate),until=25)
+f = plt.figure(dpi=150)
+Animate = mp.Animate2D(sim, fields=mp.Ez, f=f, realtime=False, normalize=True)
+sim.run(mp.at_every(0.5,Animate),until=25)
 
 # Close the animator's working frame
-#plt.close()
+plt.close()
 
 # Process the animation and view it
-#filename = "ring_simple.mp4"
-#Animate.to_mp4(5,filename)
-#Video(filename)
+filename = "ring_simple.mp4"
+Animate.to_mp4(5,filename)
+Video(filename)
 
-#sim.reset_meep()
-#fcen=0.147
-#df = 0.1
-#sim.sources = [mp.Source(mp.GaussianSource(fcen, fwidth=df), mp.Ez, mp.Vector3(r+0.1))]
-#sim.init_sim()
+sim.reset_meep()
+fcen=0.147
+df = 0.1
+sim.sources = [mp.Source(mp.GaussianSource(fcen, fwidth=df), mp.Ez, mp.Vector3(r+0.1))]
+sim.init_sim()
 
 # Start the simulation and get into steady state
-#sim.run(until=500) 
+sim.run(until=500) 
 
 # Prepare the animator and record the steady state response
-#f = plt.figure(dpi=150)
-#Animate = mp.Animate2D(sim, fields=mp.Ez, f=f, realtime=False, normalize=True)
-#sim.run(mp.at_every(0.5,Animate),until=25)
+f = plt.figure(dpi=150)
+Animate = mp.Animate2D(sim, fields=mp.Ez, f=f, realtime=False, normalize=True)
+sim.run(mp.at_every(0.5,Animate),until=25)
 
 # Close the animator's working frame
-#plt.close()
+plt.close()
 
 # Process the animation and view it
-#filename = "ring_mid.mp4"
-#Animate.to_mp4(5,filename)
-#Video(filename)
+filename = "ring_mid.mp4"
+Animate.to_mp4(5,filename)
+Video(filename)
 
 sim.reset_meep()
 fcen=0.175
