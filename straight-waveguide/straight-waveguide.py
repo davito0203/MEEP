@@ -4,6 +4,8 @@
 from __future__ import division
 
 import meep as mp
+import numpy as np
+import matplotlib.pyplot as plt
 
 cell = mp.Vector3(16,8,0)
 
@@ -27,20 +29,32 @@ sim = mp.Simulation(cell_size=cell,
 
 sim.run(until=200)
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 eps_data = sim.get_array(center=mp.Vector3(), size=cell, component=mp.Dielectric)
-plt.figure()
-plt.imshow(eps_data.transpose(), interpolation='spline36', cmap='binary')
-plt.axis('off')
+plt.figure(dpi=100)
+sim.plot2D()
 #plt.show()
-plt.savefig('figure1.png')
+plt.savefig('PLM-Box.png')
 
 ez_data = sim.get_array(center=mp.Vector3(), size=cell, component=mp.Ez)
-plt.figure()
-plt.imshow(eps_data.transpose(), interpolation='spline36', cmap='binary')
-plt.imshow(ez_data.transpose(), interpolation='spline36', cmap='RdBu', alpha=0.9)
-plt.axis('off')
+plt.figure(dpi=100)
+sim.plot2D(fields=mp.Ez)
 #plt.show()
-plt.savefig('figure2.png')
+plt.savefig('EzComponent.png')
+
+#sim.reset_meep()
+f = plt.figure(dpi=100)
+Animate = mp.Animate2D(sim, fields=mp.Ez, f=f, realtime=False, normalize=True)
+plt.close()
+
+
+
+sim.run(mp.at_every(1,Animate),until=100)
+plt.close()
+
+
+
+filename = "straight_waveguide.mp4"
+Animate.to_mp4(20,filename)
+
+from IPython.display import Video
+Video(filename)
